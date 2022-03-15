@@ -1,0 +1,37 @@
+---
+  - hosts: servers
+    name: installing some packages and some softwares
+    become: yes
+    tasks:
+      - name: updating
+        apt:
+          update_cache: yes 
+          force_apt_get: yes 
+          cache_valid_time: 3600
+      - name: installing unzip 
+        apt:
+          name: unzip
+          state: latest
+      - name: installing curl
+        apt:
+          name: curl
+          state: latest
+      - name: installing wget
+        apt:
+          name: wget
+          state: latest
+      - name: installing java software
+        apt:
+          name: defalut-jdk
+          state: absent
+        #- name: installing maven software
+        #shell: wget https://dlcdn.apache.org/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.zip
+        #- name: Extrating the maven file
+        #shell: unzip apache-maven-3.8.5-bin.zip
+        #- name: removing maven
+        #command: rm -rf apache-maven-3.8.5 apache-maven-3.8.5-bin.zip apache-maven-3.8.5-bin.zip.1
+      - name: installing maven software
+        apt:
+          name: maven
+          state: latest
+

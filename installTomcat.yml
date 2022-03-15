@@ -1,0 +1,9 @@
+---
+   - hosts: servers
+     name: Installing tomcat sever
+     become: true
+     tasks:
+       - name: Tomcat server
+         shell: wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.59/bin/apache-tomcat-9.0.59.zip
+       - name: Extracting tomcat files
+         shell: unzip apache-tomcat-9.0.59.zip

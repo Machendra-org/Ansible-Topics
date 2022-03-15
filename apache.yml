@@ -1,0 +1,43 @@
+---
+   - hosts: servers
+     name: Apache
+     become: true
+     become_user: root
+     tasks:
+       - name: Installing Apache
+         apt:
+           name: apache2
+           update_cache: yes
+           state: latest
+
+           #- name: notify the handlers  
+           #notify:
+           # - restart apache2
+
+       - name: Allow all access to tcp port 80
+         ufw:
+           rule: allow
+           port: '80'
+           proto: tcp
+
+       - name: cloning the github images
+         git:
+           repo: https://github.com/Machendra2/Local-repo-git.git
+           dest: /apache
+           clone: yes
+           update: yes
+
+       - name: Copying the image to the apache2 server
+         ansible.builtin.shell:
+           chdir: /apache/Task 1/
+           cmd: cp -r index.html pic1.png /var/www/html/
+         #copy:
+                 #src: /apache/Task 1/pic1.png
+           #dest: /var/www/html/
+
+     handlers:
+      - name: restart apache2
+        service: 
+          name: apache2 
+          state: restarted
+

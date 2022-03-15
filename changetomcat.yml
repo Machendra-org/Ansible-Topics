@@ -1,0 +1,54 @@
+- hosts: servers
+  name: Tomcat Server
+  become: true
+  become_user: root
+  #vars:
+  # tomcat_username_password: '<user username="machendra" password="Machi$12345" roles="manager-gui,admin-gui"/>'
+  # variable1: '<!--'
+  # variable2: '-->'
+  #vars:
+  # tomcat_permissions_production: True
+
+  # tomcat_users:
+  #   - username: "machendra"
+  #     password: "machi$12345"
+  #     roles: "admin-gui,manager-gui,manager-script"
+
+          #- name: comment the host-manager-context.xml file
+          #template:
+          #src: /home/ubuntu/testTemplate.txt
+          #dest: /home/ubuntu/apache-tomcat-9.0.59/webapps/host-manager/META-INF/context.xml
+
+          # - name: comment the manager-context.xml file
+          #template:
+          #src: /home/ubuntu/testTemplate.txt
+          #dest: /home/ubuntu/apache-tomcat-9.0.59/webapps/manager/META-INF/context.xml
+
+          #- name: change permissions
+          #ansible.builtin.shell:
+          #chdir: /home/ubuntu/apache-tomcat-9.0.59/bin
+          #cmd: chmod 744 *.sh
+          #- name: start tomcat
+          #ansible.builtin.shell:
+          #cmd: sh /home/ubuntu/apache-tomcat-9.0.59/bin/startup.sh
+  tasks:
+          #- name: copying war to webapps directory
+          #copy:
+          #src: /repo/target/webApp.war
+          #dest: /home/ubuntu/apache-tomcat-9.0.59/webapps
+    
+    - name: copying war to webapps directory
+      ansible.builtin.shell:
+        cmd: cp -r /repo/target/webApp.war /home/ubuntu/apache-tomcat-9.0.59/webapps
+
+        #- name: changing the username and password
+        #template:
+        #src: /home/ubuntu/userpasschange.txt
+        #dest: /home/ubuntu/apache-tomcat-9.0.59/conf/tomcat-users.xml
+
+    - name: stop tomcat
+      command: nohup /home/ubuntu/apache-tomcat-9.0.59/bin/shutdown.sh
+    - name: start tomcat
+      command: nohup /home/ubuntu/apache-tomcat-9.0.59/bin/startup.sh 
+    
+

@@ -1,0 +1,16 @@
+---
+   - hosts: servers
+     name: maven project
+     become: true
+     tasks:
+       - name: Cloning the project
+         git:
+           repo: https://github.com/Machendra-org/Maven_Projects.git 
+           dest: /repo
+           clone: yes
+           update: yes
+       - name: change the Directory and Execute maven commands
+         ansible.builtin.shell:
+           chdir: /repo
+           cmd: mvn clean install
+           

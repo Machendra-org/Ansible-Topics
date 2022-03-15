@@ -1,0 +1,37 @@
+---
+   - hosts: servers
+     name: cassandra
+     become: true
+     tasks:
+       - name: Update apt repo and cache on Ubuntu box
+         apt:
+           update_cache: yes
+           force_apt_get: yes
+           cache_valid_time: 3600
+
+       - name: Upgrade all packages on servers
+         apt:
+           upgrade: dist
+           force_apt_get: yes
+       
+           #- name: installing the cassandra
+           #shell: |
+           #wget https://downloads.apache.org/cassandra/3.11.12/apache-cassandra-3.11.12-bin.tar.gz
+           #- name: Extract Cassandra
+           #shell: tar -zxvf apache-cassandra-3.11.12-bin.tar.gz
+       
+       - name: add Cassandra repository
+         shell: |
+           sh -c 'echo "deb http://www.apache.org/dist/cassandra/debian 40x main" > /etc/apt/sources.list.d/cassandra.list'
+       - name: downloading the cassandra
+         shell: |
+           wget -q -O - https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+         args:
+           warn: no
+
+       - name: Install the Cassandra package
+         apt:
+           name: cassandra
+           state: present
+           update_cache: yes
+         

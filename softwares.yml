@@ -1,0 +1,53 @@
+---
+   - hosts: servers
+     name: installing softwares
+     become: true
+     tasks:
+       - name: updating packages
+         apt:
+           update_cache: yes
+           force_apt_get: yes
+           cache_valid_time: 3600
+       - name: installing mysql
+         apt:
+           name: mysql-server
+           state: latest
+       - name: installing mongodb
+         apt:
+           name: mongodb
+           state: latest
+       - name: installing redis
+         apt:
+           name: redis
+           state: latest
+
+
+           #- name: Download ElasticSearch package
+           #shell: wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+           #- name: check package list
+           # shell: echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+
+           #- name: Installing ElasticSearch
+           #apt:
+           #name: elasticsearch
+           #purge: yes
+           #state: present
+
+           #- name: transport files
+           #apt:
+           #name: apt-transport-https
+           #state: latest
+
+           #- name: import the gpg keys
+           #shell: wget -q -O - https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+
+           #- name: add repository
+           #shell: echo "deb http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.list
+
+           #- name: Installing the cassandra
+           #apt:
+           #name: cassandra
+           #state: latest
+
+
